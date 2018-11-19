@@ -1,0 +1,50 @@
+---
+- name: ensure graylog data dir
+  file:
+    dest: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ graylog_config_dir }}'
+    - '{{ graylog_journal_dir }}'
+    - '{{ graylog_geolite_dir }}'
+
+- name: download graylog default configs
+  get_url:
+    force: no
+    url: https://raw.githubusercontent.com/Graylog2/graylog-docker/{{ graylog_version }}/config/{{ item }}
+    dest: '{{ graylog_config_dir }}/{{ item }}'
+  with_items:
+    - graylog.conf
+    - log4j2.xml
+
+- name: download GeoLite2 Free database
+  unarchive:
+    src: http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
+    dest: '{{ graylog_geolite_dir }}/'
+    remote_src: yes
+    creates: '{{ graylog_geolite_dir }}/GeoLite2-City.mmdb'
+    extra_opts:
+      - '--strip'
+      - '1'
+      - '--exclude'
+      - '*.txt'
+  when: graylog_geolite_download
+
+- name: run graylog container
+  docker_container:
+    state: started
+    restart: yes
+    recreate: yes
+    pull: true
+    name: '{{ graylog_docker_container_name }}'
+    image: '{{ graylog_docker_image }}'
+    restart_policy: always
+    env: '{{ graylog_docker_env }}'
+    ulimits: '{{ graylog_docker_ulimits }}'
+    sysctls: '{{ graylog_docker_sysctls }}'
+    exposed_ports: '{{ graylog_docker_exposed_ports }}'
+    published_ports: '{{ graylog_docker_published_ports }}'
+    networks: '{{ graylog_docker_networks }}'
+    volumes: '{{ graylog_docker_volumes }}'
+    command: '{{ graylog_docker_command }}'
+    etc_hosts: '{{ graylog_docker_etc_hosts }}'

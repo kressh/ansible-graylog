@@ -1,0 +1,96 @@
+---
+graylog_version: 2.4
+graylog_data_dir: /var/lib/graylog/data
+graylog_config_dir: '{{ graylog_data_dir }}/config'
+graylog_journal_dir: '{{ graylog_data_dir }}/journal'
+graylog_geolite_dir: '{{ graylog_data_dir }}/geolite'
+graylog_mongodb_host: localhost
+graylog_mongodb_port: 27017
+graylog_elasticsearch_host: localhost
+graylog_elasticsearch_port: 9200
+graylog_docker_image: graylog/graylog:{{ graylog_version }}
+graylog_docker_container_name: graylog
+graylog_docker_networks: []
+graylog_docker_command: ''
+graylog_docker_exposed_ports: []
+graylog_docker_published_ports: []
+graylog_docker_ulimits:
+  - nofile:65536:65536
+graylog_maxconn: 65536
+graylog_docker_sysctls:
+  net.core.somaxconn: '{{ graylog_maxconn }}'
+graylog_docker_etc_hosts: {}
+graylog_docker_volumes:
+  - '{{ graylog_config_dir }}:/usr/share/graylog/data/config'
+  - '{{ graylog_journal_dir }}:/usr/share/graylog/data/journal'
+  - '{{ graylog_geolite_dir }}:/usr/share/graylog/data/geolite'
+
+graylog_is_master: 'true'
+graylog_web_enable: 'true'
+graylog_web_listen_uri: http://0.0.0.0:9000/
+graylog_web_endpoint_uri: '{{ graylog_rest_transport_uri }}'
+graylog_web_enable_tls: 'false'
+graylog_web_tls_cert_file: ''
+graylog_web_tls_key_file: ''
+graylog_web_tls_key_password: ''
+graylog_rest_listen_uri: http://0.0.0.0:9000/api/
+graylog_rest_transport_uri: '{{ graylog_rest_listen_uri }}'
+graylog_rest_enable_tls: 'true'
+graylog_rest_tls_cert_file: ''
+graylog_rest_tls_key_file: ''
+graylog_rest_tls_key_password: ''
+graylog_root_email: ''
+graylog_root_timezone: UTC
+graylog_password_secret: changeme
+graylog_root_username: admin
+graylog_root_password: admin
+graylog_root_password_sha2: "{{ graylog_root_password | hash('sha256') }}"
+graylog_mongodb_uri: mongodb://localhost:27017/graylog
+graylog_elasticsearch_hosts: http://localhost:9200
+graylog_trusted_proxies: '172.16.0.0/8, 127.0.0.1/32, 0:0:0:0:0:0:0:1/128'
+graylog_elasticsearch_index_prefix: graylog
+graylog_elasticsearch_max_time_per_index: 1d
+graylog_elasticsearch_max_number_of_indices: 20
+graylog_rotation_strategy: count
+graylog_retention_strategy: delete
+graylog_elasticsearch_shards: 4
+graylog_elasticsearch_replicas: 0
+
+graylog_default_env:
+  GRAYLOG_IS_MASTER: '{{ graylog_is_master }}'
+  GRAYLOG_WEB_ENABLE: '{{ graylog_web_enable }}'
+  GRAYLOG_WEB_LISTEN_URI: '{{ graylog_web_listen_uri }}'
+  GRAYLOG_WEB_ENDPOINT_URI: '{{ graylog_web_endpoint_uri }}'
+  GRAYLOG_WEB_ENABLE_TLS: '{{ graylog_web_enable_tls }}'
+  GRAYLOG_WEB_TLS_CERT_FILE: '{{ graylog_web_tls_cert_file }}'
+  GRAYLOG_WEB_TLS_KEY_FILE: '{{ graylog_web_tls_key_file }}'
+  GRAYLOG_WEB_TLS_KEY_PASSWORD: '{{ graylog_web_tls_key_password }}'
+  GRAYLOG_REST_LISTEN_URI: '{{ graylog_rest_listen_uri }}'
+  GRAYLOG_REST_TRANSPORT_URI: '{{ graylog_rest_transport_uri }}'
+  GRAYLOG_REST_ENABLE_TLS: '{{ graylog_rest_enable_tls }}'
+  GRAYLOG_REST_TLS_CERT_FILE: '{{ graylog_rest_tls_cert_file }}'
+  GRAYLOG_REST_TLS_KEY_FILE: '{{ graylog_rest_tls_key_file }}'
+  GRAYLOG_REST_TLS_KEY_PASSWORD: '{{ graylog_rest_tls_key_password }}'
+
+  GRAYLOG_ROOT_EMAIL: '{{ graylog_root_email }}'
+  GRAYLOG_ROOT_TIMEZONE: '{{ graylog_root_timezone }}'
+  GRAYLOG_PASSWORD_SECRET: '{{ graylog_password_secret }}'
+  GRAYLOG_ROOT_USERNAME: '{{ graylog_root_username }}'
+  GRAYLOG_ROOT_PASSWORD_SHA2: '{{ graylog_root_password_sha2 }}'
+
+  GRAYLOG_MONGODB_URI: '{{ graylog_mongodb_uri }}'
+  GRAYLOG_ELASTICSEARCH_HOSTS: '{{ graylog_elasticsearch_hosts }}'
+
+  GRAYLOG_TRUSTED_PROXIES: '{{ graylog_trusted_proxies }}'
+  GRAYLOG_ELASTICSEARCH_INDEX_PREFIX: '{{ graylog_elasticsearch_index_prefix }}'
+  GRAYLOG_ELASTICSEARCH_MAX_TIME_PER_INDEX: '{{ graylog_elasticsearch_max_time_per_index }}'
+  GRAYLOG_ELASTICSEARCH_MAX_NUMBER_OF_INDICES: '{{ graylog_elasticsearch_max_number_of_indices }}'
+  GRAYLOG_ROTATION_STRATEGY: '{{ graylog_rotation_strategy }}'
+  GRAYLOG_RETENTION_STRATEGY: '{{ graylog_retention_strategy }}'
+  GRAYLOG_ELASTICSEARCH_SHARDS: '{{ graylog_elasticsearch_shards }}'
+  GRAYLOG_ELASTICSEARCH_REPLICAS: '{{ graylog_elasticsearch_replicas }}'
+
+graylog_env: {}
+graylog_docker_env: '{{ graylog_default_env | combine(graylog_env) }}'
+
+graylog_geolite_download: true
