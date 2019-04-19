@@ -1,5 +1,5 @@
 ---
-graylog_version: 2.4
+graylog_version: 3.0
 graylog_data_dir: /var/lib/graylog/data
 graylog_config_dir: '{{ graylog_data_dir }}/config'
 graylog_journal_dir: '{{ graylog_data_dir }}/journal'
@@ -50,11 +50,11 @@ graylog_elasticsearch_hosts: http://localhost:9200
 graylog_trusted_proxies: '172.16.0.0/8, 127.0.0.1/32, 0:0:0:0:0:0:0:1/128'
 graylog_elasticsearch_index_prefix: graylog
 graylog_elasticsearch_max_time_per_index: 1d
-graylog_elasticsearch_max_number_of_indices: 20
+graylog_elasticsearch_max_number_of_indices: '20'
 graylog_rotation_strategy: count
 graylog_retention_strategy: delete
-graylog_elasticsearch_shards: 4
-graylog_elasticsearch_replicas: 0
+graylog_elasticsearch_shards: '4'
+graylog_elasticsearch_replicas: '0'
 
 graylog_default_env:
   GRAYLOG_IS_MASTER: '{{ graylog_is_master }}'

@@ -30,6 +30,13 @@
       - '*.txt'
   when: graylog_geolite_download
 
+- name: chown graylog data dir
+  file:
+    path: '{{ graylog_data_dir }}'
+    owner: 1100
+    group: 1100
+    recurse: yes
+
 - name: run graylog container
   docker_container:
     state: started
