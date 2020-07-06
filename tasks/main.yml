@@ -19,7 +19,7 @@
 
 - name: download GeoLite2 Free database
   unarchive:
-    src: http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.tar.gz
+    src: '{{ graylog_geolite_url }}'
     dest: '{{ graylog_geolite_dir }}/'
     remote_src: yes
     creates: '{{ graylog_geolite_dir }}/GeoLite2-City.mmdb'

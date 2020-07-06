@@ -1,5 +1,5 @@
 ---
-graylog_version: 3.0
+graylog_version: 3.3
 graylog_data_dir: /var/lib/graylog/data
 graylog_config_dir: '{{ graylog_data_dir }}/config'
 graylog_journal_dir: '{{ graylog_data_dir }}/journal'
@@ -26,19 +26,7 @@ graylog_docker_volumes:
   - '{{ graylog_geolite_dir }}:/usr/share/graylog/data/geolite'
 
 graylog_is_master: 'true'
-graylog_web_enable: 'true'
-graylog_web_listen_uri: http://0.0.0.0:9000/
-graylog_web_endpoint_uri: '{{ graylog_rest_transport_uri }}'
-graylog_web_enable_tls: 'false'
-graylog_web_tls_cert_file: ''
-graylog_web_tls_key_file: ''
-graylog_web_tls_key_password: ''
-graylog_rest_listen_uri: http://0.0.0.0:9000/api/
-graylog_rest_transport_uri: '{{ graylog_rest_listen_uri }}'
-graylog_rest_enable_tls: 'true'
-graylog_rest_tls_cert_file: ''
-graylog_rest_tls_key_file: ''
-graylog_rest_tls_key_password: ''
+graylog_http_publish_uri: http://127.0.0.1:9000
 graylog_root_email: ''
 graylog_root_timezone: UTC
 graylog_password_secret: changeme
@@ -58,19 +46,7 @@ graylog_elasticsearch_replicas: '0'
 
 graylog_default_env:
   GRAYLOG_IS_MASTER: '{{ graylog_is_master }}'
-  GRAYLOG_WEB_ENABLE: '{{ graylog_web_enable }}'
-  GRAYLOG_WEB_LISTEN_URI: '{{ graylog_web_listen_uri }}'
-  GRAYLOG_WEB_ENDPOINT_URI: '{{ graylog_web_endpoint_uri }}'
-  GRAYLOG_WEB_ENABLE_TLS: '{{ graylog_web_enable_tls }}'
-  GRAYLOG_WEB_TLS_CERT_FILE: '{{ graylog_web_tls_cert_file }}'
-  GRAYLOG_WEB_TLS_KEY_FILE: '{{ graylog_web_tls_key_file }}'
-  GRAYLOG_WEB_TLS_KEY_PASSWORD: '{{ graylog_web_tls_key_password }}'
-  GRAYLOG_REST_LISTEN_URI: '{{ graylog_rest_listen_uri }}'
-  GRAYLOG_REST_TRANSPORT_URI: '{{ graylog_rest_transport_uri }}'
-  GRAYLOG_REST_ENABLE_TLS: '{{ graylog_rest_enable_tls }}'
-  GRAYLOG_REST_TLS_CERT_FILE: '{{ graylog_rest_tls_cert_file }}'
-  GRAYLOG_REST_TLS_KEY_FILE: '{{ graylog_rest_tls_key_file }}'
-  GRAYLOG_REST_TLS_KEY_PASSWORD: '{{ graylog_rest_tls_key_password }}'
+  GRAYLOG_HTTP_PUBLISH_URI: '{{ graylog_http_publish_uri }}'
 
   GRAYLOG_ROOT_EMAIL: '{{ graylog_root_email }}'
   GRAYLOG_ROOT_TIMEZONE: '{{ graylog_root_timezone }}'
@@ -94,3 +70,4 @@ graylog_env: {}
 graylog_docker_env: '{{ graylog_default_env | combine(graylog_env) }}'
 
 graylog_geolite_download: true
+graylog_geolite_url: https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=YOUR_LICENSE_KEY&suffix=tar.gz
