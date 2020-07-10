@@ -55,3 +55,7 @@
     volumes: '{{ graylog_docker_volumes }}'
     command: '{{ graylog_docker_command }}'
     etc_hosts: '{{ graylog_docker_etc_hosts }}'
+    memory: "{{ graylog_container_memory }}"
+    memory_reservation: "{{ graylog_container_memory_reservation }}"
+    memory_swap: "{{ graylog_container_memory_swap }}"
+    memory_swappiness: "{{ graylog_container_memory_swappiness }}"

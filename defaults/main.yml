@@ -71,3 +71,8 @@ graylog_docker_env: '{{ graylog_default_env | combine(graylog_env) }}'
 
 graylog_geolite_download: true
 graylog_geolite_url: https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=YOUR_LICENSE_KEY&suffix=tar.gz
+
+graylog_container_memory:
+graylog_container_memory_reservation:
+graylog_container_memory_swap:
+graylog_container_memory_swappiness:
